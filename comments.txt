@@ -1,0 +1,9 @@
+start with tut
+
+// the minimum for a module is:
+import { Module } from '@nestjs/common';
+
+@Module({})
+export class AuthModule {}
+
+ctrl + . for force imports!!

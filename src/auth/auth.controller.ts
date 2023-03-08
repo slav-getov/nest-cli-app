@@ -10,10 +10,6 @@ import { AuthService } from './auth.service';
 @Controller('/auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
-  @Post('singup')
-  signUp() {
-    return this.authService.signUp();
-  }
 
   @Post('/login')
   logIn() {

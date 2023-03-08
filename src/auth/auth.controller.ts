@@ -1,15 +1,29 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Param,
+  NotFoundException,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
+
 @Controller('/auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
   @Post('singup')
-  signUp(): string {
-    return 'this is sign up';
+  signUp() {
+    return this.authService.signUp();
   }
 
   @Post('/login')
-  logIn(): string {
-    return 'this is log in';
+  logIn() {
+    return this.authService.login();
+  }
+
+  @Get('/:id')
+  receiveInfo(@Param('id') id: string) {
+    if (id != 'found') {
+      throw new NotFoundException("didn't find it");
+    }
   }
 }

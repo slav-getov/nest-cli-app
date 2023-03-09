@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  AfterInsert,
+  AfterUpdate,
+  BeforeRemove,
+} from 'typeorm';
 
 @Entity()
 export class Client {
@@ -12,4 +19,17 @@ export class Client {
   email: string;
   @Column()
   password: string;
+  //remember that if you just save entity directly to db hooks will not execute!!!
+  @AfterInsert()
+  logAfterInsert() {
+    console.log(`Inserted user with id ${this.id}`);
+  }
+  @AfterUpdate()
+  logAfterUpdate() {
+    console.log(`Updated user with id ${this.id}`);
+  }
+  @BeforeRemove()
+  logAfterRemove() {
+    console.log(`User with id ${this.id} removed`);
+  }
 }

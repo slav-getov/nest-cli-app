@@ -11,15 +11,15 @@ import { AuthService } from './auth.service';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('/login')
-  logIn() {
-    return this.authService.login();
-  }
+  // @Post('/login')
+  // logIn() {
+  //   return this.authService.login();
+  // }
 
-  @Get('/:id')
-  receiveInfo(@Param('id') id: string) {
-    if (id != 'found') {
-      throw new NotFoundException("didn't find it");
-    }
-  }
+  // @Get('/:id')
+  // receiveInfo(@Param('id') id: string) {
+  //   if (id != 'found') {
+  //     throw new NotFoundException("didn't find it");
+  //   }
+  // }
 }

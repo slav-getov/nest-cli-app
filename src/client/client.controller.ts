@@ -1,4 +1,13 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Patch,
+  Delete,
+  Param,
+  Query,
+} from '@nestjs/common';
 import { CreateClientDto } from './dtos/create-client.dto';
 import { ClientService } from './client.service';
 
@@ -13,5 +22,17 @@ export class ClientController {
       body.email,
       body.password,
     );
+  }
+  @Get('/:id')
+  findUserById(@Param('id') id: string) {
+    return this.clientService.findOne(parseInt(id));
+  }
+  @Get()
+  findAllUsersBySpecificField(@Query('email') email: string) {
+    return this.clientService.find(email);
+  }
+  @Delete('/:id')
+  removeUserBasedOnId(@Param('id') id: string) {
+    return this.clientService.remove(parseInt(id));
   }
 }

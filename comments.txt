@@ -9,3 +9,5 @@ export class AuthModule {}
 ctrl + . for force imports!!
 
 nestjs will send the appropriate format - so I think...
+
+so we can tie the validation to the entity and not the req via dto???

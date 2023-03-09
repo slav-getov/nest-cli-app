@@ -6,6 +6,7 @@ import {
   AfterUpdate,
   BeforeRemove,
 } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class Client {
@@ -18,6 +19,7 @@ export class Client {
   @Column()
   email: string;
   @Column()
+  @Exclude()
   password: string;
   //remember that if you just save entity directly to db hooks will not execute!!!
   @AfterInsert()

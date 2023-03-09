@@ -8,6 +8,8 @@ import {
   Param,
   Query,
   NotFoundException,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { CreateClientDto } from './dtos/create-client.dto';
 import { UpdateClientDto } from './dtos/update-client.dto';
@@ -25,6 +27,7 @@ export class ClientController {
       body.password,
     );
   }
+  @UseInterceptors(ClassSerializerInterceptor)
   @Get('/:id')
   async findClientById(@Param('id') id: string) {
     const client = await this.clientService.findOne(parseInt(id));

@@ -14,7 +14,8 @@ import {
 import { CreateClientDto } from './dtos/create-client.dto';
 import { UpdateClientDto } from './dtos/update-client.dto';
 import { ClientService } from './client.service';
-
+import { SerializeInterceptor } from 'src/interceptors/serialize.interceptor';
+import { ClientDto } from './dtos/client.dto';
 @Controller('auth')
 export class ClientController {
   constructor(private clientService: ClientService) {}
@@ -27,7 +28,7 @@ export class ClientController {
       body.password,
     );
   }
-  @UseInterceptors(ClassSerializerInterceptor)
+  @UseInterceptors(new SerializeInterceptor(ClientDto))
   @Get('/:id')
   async findClientById(@Param('id') id: string) {
     const client = await this.clientService.findOne(parseInt(id));

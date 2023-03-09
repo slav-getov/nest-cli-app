@@ -1,9 +1,4 @@
-import {
-  IsString,
-  IsEmail,
-  IsStrongPassword,
-  IsNotEmpty,
-} from 'class-validator';
+import { IsString, IsEmail, IsNotEmpty } from 'class-validator';
 export class CreateClientDto {
   @IsString()
   @IsNotEmpty()
@@ -15,7 +10,6 @@ export class CreateClientDto {
   @IsNotEmpty()
   email: string;
   @IsString()
-  @IsStrongPassword()
   @IsNotEmpty()
   password: string;
 }

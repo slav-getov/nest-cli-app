@@ -7,15 +7,17 @@ import {
   Delete,
   Param,
   Query,
+  NotFoundException,
 } from '@nestjs/common';
 import { CreateClientDto } from './dtos/create-client.dto';
+import { UpdateClientDto } from './dtos/update-client.dto';
 import { ClientService } from './client.service';
 
 @Controller('auth')
 export class ClientController {
   constructor(private clientService: ClientService) {}
   @Post('/signup')
-  createUser(@Body() body: CreateClientDto) {
+  createClient(@Body() body: CreateClientDto) {
     this.clientService.create(
       body.firstName,
       body.lastName,
@@ -24,15 +26,26 @@ export class ClientController {
     );
   }
   @Get('/:id')
-  findUserById(@Param('id') id: string) {
-    return this.clientService.findOne(parseInt(id));
+  async findClientById(@Param('id') id: string) {
+    const client = await this.clientService.findOne(parseInt(id));
+    if (!client) {
+      throw new NotFoundException('No client found correspoding to this id');
+    }
+    return client;
   }
   @Get()
-  findAllUsersBySpecificField(@Query('email') email: string) {
+  findAllClientsBySpecificField(@Query('email') email: string) {
     return this.clientService.find(email);
   }
   @Delete('/:id')
-  removeUserBasedOnId(@Param('id') id: string) {
+  removeClientBasedOnId(@Param('id') id: string) {
     return this.clientService.remove(parseInt(id));
+  }
+  @Patch('/:id')
+  updateClientBasedOnId(
+    @Param('id') id: string,
+    @Body() body: UpdateClientDto,
+  ) {
+    return this.clientService.update(parseInt(id), body);
   }
 }

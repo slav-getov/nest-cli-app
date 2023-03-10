@@ -9,7 +9,6 @@ import {
   Param,
   Query,
   NotFoundException,
-  UseInterceptors,
 } from '@nestjs/common';
 import { CreateClientDto } from './dtos/create-client.dto';
 import { UpdateClientDto } from './dtos/update-client.dto';
@@ -17,6 +16,7 @@ import { ClientService } from './client.service';
 //import { SerializeInterceptor } from 'src/interceptors/serialize.interceptor';
 import { ClientDto } from './dtos/client.dto';
 @Controller('auth')
+@Serialize(ClientDto)
 export class ClientController {
   constructor(private clientService: ClientService) {}
   @Post('/signup')
@@ -36,8 +36,6 @@ export class ClientController {
     }
     return client;
   }
-
-  @Serialize(ClientDto)
   @Get('/:id')
   async findClientById(@Param('id') id: string) {
     const client = await this.clientService.findOne(parseInt(id));

@@ -28,19 +28,35 @@ export class ClientController {
       body.password,
     );
   }
+  @Get('/all')
+  findAllClients() {
+    const client = this.clientService.findAllGeneric();
+    if (!client) {
+      throw new NotFoundException('No clients currently available');
+    }
+    return client;
+  }
   @UseInterceptors(new SerializeInterceptor(ClientDto))
   @Get('/:id')
   async findClientById(@Param('id') id: string) {
     const client = await this.clientService.findOne(parseInt(id));
     if (!client) {
-      throw new NotFoundException('No client found correspoding to this id');
+      throw new NotFoundException('No client found corresponding to this id');
     }
     return client;
   }
+
   @Get()
   findAllClientsBySpecificField(@Query('email') email: string) {
-    return this.clientService.find(email);
+    const client = this.clientService.find(email);
+    if (!client) {
+      throw new NotFoundException(
+        'No client found corresponding with this email',
+      );
+    }
+    return client;
   }
+
   @Delete('/:id')
   removeClientBasedOnId(@Param('id') id: string) {
     return this.clientService.remove(parseInt(id));

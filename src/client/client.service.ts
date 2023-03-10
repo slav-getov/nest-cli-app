@@ -15,6 +15,9 @@ export class ClientService {
   findOne(id: number) {
     return this.repo.findOneBy({ id });
   }
+  findAllGeneric() {
+    return this.repo.find();
+  }
   find(email: string) {
     return this.repo.find({ where: { email } });
   }
